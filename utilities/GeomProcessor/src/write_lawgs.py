@@ -1,6 +1,5 @@
 import os
 from read_hrm import hrm_Reader
-from decimal import Decimal
 
 def create_block(data):
     
@@ -14,6 +13,7 @@ def create_block(data):
             + create_rec_4_from_hrm(points_list,no_pts,no_secs)
     
     return block
+
 
 class writer_lawgs():
 
@@ -59,6 +59,7 @@ def create_rec_4_from_hrm(points_list,no_pts,no_secs):
 
     block_string = "  "
     last_i_trig= 0
+
     for i in range(no_secs):
         for j in range(no_pts*3):
             
@@ -86,17 +87,19 @@ def test_func():
     b.hrm2lawgs("utilities/hrm_parser/meshes/space_ship_fixed.hrm",
                 "utilities/hrm_parser/exports/ss2_fixed.wgs")
 
-test_func()
-    # config_2 = create_rec_3_from_hrm(hrm.group_num[0],
-    #                             hrm.points_per_sec[0],
-    #                             hrm.sections_num[0],
-    #                             [0,11,11,0,0,0,0,0,0,0,1,1,1,1])
+# test_func()
+
+
+# config_2 = create_rec_3_from_hrm(hrm.group_num[0],
+#                             hrm.points_per_sec[0],
+#                             hrm.sections_num[0],
+#                             [0,11,11,0,0,0,0,0,0,0,1,1,1,1])
 
 
 
-    # fin = create_rec_4_from_hrm(hrm.cart_points[0],
-    #                             hrm.points_per_sec[0],
-    #                             hrm.sections_num[0])
+# fin = create_rec_4_from_hrm(hrm.cart_points[0],
+#                             hrm.points_per_sec[0],
+#                             hrm.sections_num[0])
     
 
 

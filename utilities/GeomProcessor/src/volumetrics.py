@@ -1,5 +1,4 @@
 from scipy.spatial import Delaunay, ConvexHull
-import matplotlib.pyplot as plt
 import numpy as np
 
 def in_hull(p, hull):
@@ -19,9 +18,19 @@ def in_hull(p, hull):
 
 def test_func_convex_hull():
 
+    import matplotlib.pyplot as plt
+
     points = np.random.uniform(0, 10, size=(200, 3) )  # Random points in 2-D
 
+    points_check = np.random.uniform(0, 15, size=(40, 3) )
+
     hull = ConvexHull(points)
+    print(points[hull.vertices])
+    check_interior = in_hull(points_check,points[hull.vertices])
+    print(check_interior.shape)
+
+    int_points = points_check[check_interior]
+    ext_points = points_check[~check_interior]
 
     fig, (ax1, ax2) = plt.subplots(ncols=2, figsize=(10, 3), subplot_kw=dict(projection="3d"))
 
@@ -33,20 +42,23 @@ def test_func_convex_hull():
             ax.set_title('Convex hull')
             for simplex in hull.simplices:
                 ax.plot(points[simplex, 0], points[simplex, 1], points[simplex, 2], 'c')
-            ax.plot(points[hull.vertices, 0], points[hull.vertices, 1], points[hull.vertices, 2], 'o', mec='r', color='none', lw=1, markersize=10)
-        ax.set_xticks(range(10))
-        ax.set_yticks(range(10))
+            ax.plot(points[hull.vertices, 0], points[hull.vertices, 1], points[hull.vertices, 2], 'o', mec='m', color='none', lw=1, markersize=5)
+            ax.plot(int_points[:, 0], int_points[:, 1], int_points[:, 2], 'x', mec='g', color='none', lw=1, markersize=10)
+            ax.plot(ext_points[:, 0], ext_points[:, 1], ext_points[:, 2], 'x', mec='r', color='none', lw=1, markersize=10)
+        ax.set_xticks(range(15))
+        ax.set_yticks(range(15))
     plt.show()
 
-    points_1 = np.random.uniform(0, 15, size=(40, 3) )
+    
 
     # print(points)
 
-    print(in_hull(points_1,hull.simplices))
+    # print(in_hull(points_1,hull.simplices))
 
 def test_func_stock():
 
     from read_hrm import hrm_Reader
+    import matplotlib.pyplot as plt
 
     base_path = "utilities/GeomProcessor/meshes/"
     hrm = hrm_Reader(base_path + "convex_hull_test.hrm")
@@ -58,6 +70,8 @@ def test_func_stock():
     wing_1 = point_cloud[1]
 
     mask = in_hull(wing_1,fuselage)
+    
+
     wing_1_fix = wing_1[~ mask]
 
     for ax in (ax1, ax2):
@@ -79,19 +93,15 @@ def test_func_stock():
         ax.set_zlabel('Z Length')
 
         ax.set_xlim3d(10, 14)
-        ax.set_ylim3d(-5, 5)
-        ax.set_zlim3d(-5, 5)
+        ax.set_ylim3d(-2, 3)
+        ax.set_zlim3d(-2, 3)
 
     plt.show()
 
     # print(point_cloud)
     
-
-    
-    
-
-# test_func_convex_hull()
-test_func_stock()
+test_func_convex_hull()
+# test_func_stock()
 
 
 

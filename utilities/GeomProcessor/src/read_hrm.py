@@ -1,5 +1,6 @@
 import os
 import numpy as np
+from volumetrics import in_hull
 from matplotlib import pyplot as plt
 
 
@@ -107,6 +108,10 @@ class hrm_Reader():
         self.points_per_sec = values[5]
         self.cart_points = values[6]
 
+        self.cart_points_np = self.get_cart_points_as_np()
+
+        self.cull_intersects()
+
     def get_cart_points_as_np(self):
 
         np_cart_stack = []
@@ -117,25 +122,38 @@ class hrm_Reader():
 
         return np_cart_stack
     
+    def cull_intersects(self):
+
+        tot_comp_num = len(self.block_names)
+        tot_comp_num = 7
+
+        for i in range(tot_comp_num):
+            for j in range(i+1):
+                if i is not j:
+                    print(f'({i},{j})', end = '  ')
+            print()
     
         
 ### TEST FUNC DEFS ###
 
 def test_constructor():
 
-    print(check_file_exists("GeomParser/meshes/test_hermite.hrm"))
+    # print(check_file_exists("GeomParser/meshes/test_hermite.hrm"))
 
-    mem_file = open("GeomParser/meshes/test_hermite.hrm","r")
+    # mem_file = open("GeomParser/meshes/test_hermite.hrm","r")
 
-    print(type(mem_file.read()))
+    # print(type(mem_file.read()))
 
-    print(check_file_ext("GeomParser/meshes/test_hermite.hrm", ".hrm"))
+    # print(check_file_ext("GeomParser/meshes/test_hermite.hrm", ".hrm"))
 
-    block = get_blocks("GeomParser/meshes/eeee.hrm")
+    # block = get_blocks("GeomParser/meshes/eeee.hrm")
 
-    print(block[0])
-    print(block[1])
-    print(block[3])
+    # print(block[0])
+    # print(block[1])
+    # print(block[3])
+
+    base_path = "utilities/GeomProcessor/meshes/"
+    hrm = hrm_Reader(base_path + "convex_hull_test.hrm")
 
 def test_plot_func():
 
@@ -167,3 +185,4 @@ def test_plot_func():
 
 
 # test_plot_func()
+test_constructor()
