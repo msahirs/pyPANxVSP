@@ -175,3 +175,6 @@ cython_debug/
 panin
 panair
 *.exe
+ft*
+*.tmp
+rwms*
