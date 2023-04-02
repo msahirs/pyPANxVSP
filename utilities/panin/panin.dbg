@@ -1,0 +1,42 @@
+ Debug output from panin on                
+ Reading auxiliary data from try_22.aux
+ Reading wgs file general title:Created by sahir hrm parsing tool
+ Completed reading network:Fuselage
+ Completed reading network:Main Wing
+ Completed reading network:Main Wing
+ Completed reading network:Nozzle
+ Completed reading network:Main WIng Pt 2
+ Completed reading network:Main WIng Pt 2
+ Completed reading network:V-Stab
+ Completed reading network:V-Stab
+ Completed reading network:Booms
+ Completed reading network:Booms
+ Completed reading network:H-Stab OB
+ Completed reading network:H-Stab OB
+ Completed reading network:H-Stab IB
+ Completed reading network:H-Stab IB
+ There are           14  networks.
+ Command  1 MACH 0.5
+ Mach=  0.500000000    
+ Command 11 ALPHA 5
+ Command 42 PRECISION 6
+ Command  2 sref 1.0
+ Command  7 span 2
+ Command  6 cbar 0.667
+ Command  3 xref 0.5
+ Command 35 BOUN 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ Net            1    kt=           1
+ Net            2    kt=           1
+ Net            3    kt=           1
+ Net            4    kt=           1
+ Net            5    kt=           1
+ Net            6    kt=           1
+ Net            7    kt=           1
+ Net            8    kt=           1
+ Net            9    kt=           1
+ Net           10    kt=           1
+ Net           11    kt=           1
+ Net           12    kt=           1
+ Net           13    kt=           1
+ Net           14    kt=           1
+ Command 58 WAKE 1 1 30
