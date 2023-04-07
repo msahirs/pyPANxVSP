@@ -58,7 +58,7 @@ def create_rec_3_from_hrm(grp_id,no_pts,no_secs,config):
 def create_rec_4_from_hrm(points_list,no_pts,no_secs):
 
     block_string = "  "
-    last_i_trig= 0
+    
 
     for i in range(no_secs):
         for j in range(no_pts*3):
@@ -75,6 +75,7 @@ def create_rec_4_from_hrm(points_list,no_pts,no_secs):
             block_string += ("\n" + "  ")
         else:
             block_string += ("\n")
+            
     return block_string
         
 

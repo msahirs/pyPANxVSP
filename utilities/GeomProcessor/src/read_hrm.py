@@ -1,7 +1,9 @@
 import os
 import numpy as np
-from volumetrics import in_hull
+# from volumetrics import in_hull
 from matplotlib import pyplot as plt
+# import tqdm
+
 
 
 GLOBAL_KEYS = ["NUMBER OF COMPONENTS"]
@@ -118,6 +120,7 @@ class hrm_Reader():
 
         for i in self.cart_points:
             np_cart_pc = np.array(i).reshape(-1,3)
+            # print(np_cart_pc.shape)
             np_cart_stack.append(np_cart_pc)
 
         return np_cart_stack
@@ -127,11 +130,11 @@ class hrm_Reader():
         tot_comp_num = len(self.block_names)
         tot_comp_num = 7
 
-        for i in range(tot_comp_num):
-            for j in range(i+1):
-                if i is not j:
-                    print(f'({i},{j})', end = '  ')
-            print()
+        # for i in range(tot_comp_num):
+        #     for j in range(i+1):
+        #         if i is not j:
+        #             print(f'({i},{j})', end = '  ')
+        #     print()
     
         
 ### TEST FUNC DEFS ###
@@ -154,6 +157,10 @@ def test_constructor():
 
     base_path = "utilities/GeomProcessor/meshes/"
     hrm = hrm_Reader(base_path + "convex_hull_test.hrm")
+
+    points_np = hrm.cart_points_np
+
+    print(points_np)
 
 def test_plot_func():
 
@@ -185,4 +192,4 @@ def test_plot_func():
 
 
 # test_plot_func()
-test_constructor()
+# test_constructor()
