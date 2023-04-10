@@ -2,10 +2,14 @@ import os
 import numpy as np
 # from volumetrics import in_hull
 from matplotlib import pyplot as plt
+import matplotlib as mpl
 import matplotlib.style as mplstyle
-mplstyle.use(['dark_background', 'ggplot', 'fast'])
+mplstyle.use(['dark_background'])
 import trimesh
+from matplotlib import cm
+
 import time
+import scipy.spatial as spa
 
 # import tqdm
 
@@ -45,24 +49,26 @@ def read_blocks(file):
                           dtype= np.int32)
     end = time.time()
 
-    print(f"\nTotal execution time for single call = {(end-start):.5} seconds ",)
-    fig = plt.figure(figsize=(12,6))
+    return verts, tri_verts, comps
 
-    ax = fig.add_subplot(1, 1, 1, projection='3d')
-    ax.plot_trisurf(verts[:,0],verts[:,1],verts[:,2],
-                    triangles=tri_verts, cmap=plt.cm.inferno)
-    # ax.plot(verts[:,0],verts[:,1],verts[:,2],
-    #                 'o', mec='m', color='none', lw=1, markersize=5)
+    # print(f"\nTotal execution time for single call = {(end-start):.5} seconds ",)
+    # fig = plt.figure(figsize=(12,6))
+
+    # ax = fig.add_subplot(1, 1, 1, projection='3d')
+    # ax.plot_trisurf(verts[:,0],verts[:,1],verts[:,2],
+    #                 triangles=tri_verts, cmap=plt.cm.inferno)
+    # # ax.plot(verts[:,0],verts[:,1],verts[:,2],
+    # #                 'o', mec='m', color='none', lw=1, markersize=5)
     
-    ax.set_xlabel('X Length')
-    ax.set_ylabel('Y Length')
-    ax.set_zlabel('Z Length')
+    # ax.set_xlabel('X Length')
+    # ax.set_ylabel('Y Length')
+    # ax.set_zlabel('Z Length')
 
-    ax.set_xlim3d(0, 20)
-    ax.set_ylim3d(-10, 10)
-    ax.set_zlim3d(-10, 10)
-    ax.set_aspect('auto')
-    plt.show()
+    # ax.set_xlim3d(0, 20)
+    # ax.set_ylim3d(-10, 10)
+    # ax.set_zlim3d(-10, 10)
+    # ax.set_aspect('auto')
+    # plt.show()
 
     # mesh = trimesh.Trimesh(vertices=tri_verts,
     #                        faces=tri_verts)
@@ -86,8 +92,38 @@ class tri_Reader():
 def test_read():
 
     base_path = "utilities/GeomProcessor/meshes/"
-    tri = read_blocks(base_path + "trii_ex.tri")
+    verts, tri_verts, comps = read_blocks(base_path + "trii_ex.tri")
 
+def test_trimesh(): 
+
+    base_path = "utilities/GeomProcessor/meshes/"
+    verts, tri_verts, comps = read_blocks(base_path + "trii_ex.tri")
+
+    mesh = trimesh.Trimesh(vertices=verts,
+                           faces=tri_verts)
     
+    broke = trimesh.repair.broken_faces(mesh)
 
-test_read()
+    viridis = mpl.colormaps['inferno'].resampled(100)
+    print(viridis)
+    col_map = viridis(np.linspace(0, 1, mesh.visual.face_colors.shape[0])) * 255
+    color_x = np.array([0,20.3,100,75])
+    # mesh.visual.face_colors = np.tile(color_x,(mesh.visual.face_colors.shape[0],1))
+    mesh.visual.face_colors = col_map
+    mesh.visual.face_colors[broke] = np.array([255,0,0,255])
+    print(mesh.faces.shape)
+    print(mesh.is_watertight)
+    # print(mesh.visual.face_colors.shape)
+    
+    # color_y = np.array([255,0,0,0])
+    # mesh.visual.face_colors = np.tile(color_x,(mesh.visual.face_colors.shape[0],1))
+    # points = trimesh.PointCloud(vertices=mesh.vertices,
+    #                              colors=np.tile(color_y,(mesh.visual.face_colors.shape[0],1)))
+    scene = trimesh.Scene([
+                       mesh])
+    
+    scene.show(flags={'axis': True})
+
+
+# test_read()
+test_trimesh()
